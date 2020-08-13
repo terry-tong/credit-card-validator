@@ -1,23 +1,30 @@
 def luhn_algorithm():
-    cc = list(input("Please enter your 16-digit credit card number: "))
-    n = len(cc) - 2
+    cc = input("Please enter your 16-digit credit card number: ")
+    check = list(cc)
+    issuer = 0
+    n = len(check) - 2
     while n >= 0:
-        cc[n] = int(cc[n]) * 2
-        if cc[n] >= 10:
+        check[n] = int(check[n]) * 2
+        if check[n] >= 10:
             sumDigits = 0
-            for digit in str(cc[n]):
+            for digit in str(check[n]):
                 sumDigits += int(digit)
-            cc[n] = str(sumDigits)
-        cc[n] = str(cc[n])
+            check[n] = str(sumDigits)
+        check[n] = str(check[n])
         n -= 2
-    ccSum = 0
-    for digit in ''.join(cc):
-        ccSum += int(digit)
-    if ccSum % 10 == 0:
+    checkSum = 0
+    for digit in ''.join(check):
+        checkSum += int(digit)
+    if checkSum % 10 == 0:
         valid = True
-        print("This credit card is valid.")
+        if cc[0] == "4":
+            issuer = "Visa"
+        if cc[0] == "5" and cc[1] in "12345":
+            issuer = "Mastercard"
+        print("This credit card is valid and is issued by {}.".format(issuer))
     else:
         valid = False
         print("This credit card is invalid.")
+
 
 luhn_algorithm()
